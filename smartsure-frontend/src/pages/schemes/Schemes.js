@@ -1,0 +1,89 @@
+import React, { useState, useEffect } from 'react';
+import Wrapper from '../../components/Wrapper';
+
+const Schemes = () => {
+  const [schemes, setSchemes] = useState([])
+
+  useEffect(() => {
+    let getSchemes = async()=> {
+      let headersList = {
+        "Accept": "*/*",
+        "User-Agent": "Thunder Client (https://www.thunderclient.com)"
+       }
+       
+       let response = await fetch("http://127.0.0.1:8000/schemes/", { 
+         method: "GET",
+         headers: headersList
+       });
+       
+       let data = await response.json();
+       console.log(data);
+       setSchemes(data)
+    };
+    getSchemes()
+  }, [])
+
+  return (
+    <Wrapper>
+          <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 className="h2">Schemes</h1>
+        <div className="btn-toolbar mb-2 mb-md-0">
+          <div className="btn-group me-2">
+            <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
+          </div>
+          <button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+
+            This week
+          </button>
+        </div>
+      </div>
+
+    
+      <div className="table-responsive small">
+        <table className="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Type</th>
+              <th scope="col">Max No. of People</th>
+              <th scope="col" colSpan={3}></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              {schemes.map((scheme) => (
+                <tr>
+                <td>{scheme.id}</td>
+                <td>{scheme.name}</td>
+                <td>{scheme.scheme_type}</td>
+                <td>{scheme.max_number_of_people}</td>
+                <td>
+                  <a href='#' className='btn btn-info btn-sm'>
+                  <i className="bi bi-eye"></i>
+                  </a>
+                </td>
+                <td>
+                  <a href='#' className='btn btn-primary btn-sm'>
+                  <i className="bi bi-pencil-square"></i>
+                  </a>
+                </td>
+                <td>
+                  <a href='#' className='btn btn-danger btn-sm'>
+                  <i className="bi bi-trash"></i>
+                  </a>
+                </td>
+              </tr>
+              ))}
+            
+          </tbody>
+        </table>
+      </div>
+    </main>
+    </Wrapper>
+  )
+}
+
+export default Schemes
