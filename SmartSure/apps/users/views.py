@@ -6,11 +6,11 @@ from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.users.models import User
+from apps.users.models import Membership, User
 from apps.users.serializers import (ChangePasswordSerializer,
                                     EditUserProfileSerializer,
                                     ForgotPasswordSerializer,
-                                    RegisterSerializer,
+                                    MembershipSerializer, RegisterSerializer,
                                     UserActivationSerializer,
                                     UserListSerializer, UserLoginSerializer)
 
@@ -145,3 +145,26 @@ class UserActivationAPIView(APIView):
             user.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+class MembershipListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Membership.objects.all()
+    serializer_class = MembershipSerializer
+
+    def get(self, request, *args, **kwargs):
+        queryset = Membership.objects.all()
+        scheme_group = request.query_params.get("scheme_group")
+        print(f"Scheme Group: {scheme_group}")
+
+        if scheme_group:
+            queryset = queryset.filter(scheme_group=scheme_group)
+            serializer = self.serializer_class(instance=queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return super().get(request, *args, **kwargs)
+
+
+class MembershipDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Membership.objects.all()
+    serializer_class = MembershipSerializer
+
+    lookup_field = "pk"

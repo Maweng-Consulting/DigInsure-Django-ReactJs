@@ -16,6 +16,7 @@ import Payments from './pages/payments/Payments';
 
 //SchemeGroups
 import SchemeGroups from './pages/scheme_groups/SchemeGroups';
+import SchemeGroupDetail from './pages/scheme_groups/SchemeGroupDetail';
 
 // Schemes
 import Schemes from './pages/schemes/Schemes';
@@ -26,6 +27,7 @@ import Claims from './pages/claims/Claims';
 //Pricing Plans
 import PricingPlans from './pages/pricing/PricingPlans';
 import PricingPlanDetail from './pages/pricing/PricingPlanDetail';
+import NewPricingPlan from './pages/pricing/NewPricingPlan';
 
 function App() {
   return (
@@ -35,13 +37,18 @@ function App() {
         <Route path='/users' element={<User />} />
         <Route path='/policies' element={<Policies />} />
         <Route path='/schemes' element={<Schemes />} />
+        
         <Route path='/scheme-groups' element={<SchemeGroups />} />
+        <Route path='/scheme-groups/:id' element={<SchemeGroupDetail />} />
+
         <Route path='/payments' element={<Payments />} />
         <Route path='/premiums' element={<Premiums />} />
         <Route path='/claims' element={<Claims />} />
 
         <Route path='/pricing-plans' element={<PricingPlans />} />
         <Route path='/pricing-plans/:id' element={<PricingPlanDetail />} />
+        <Route path='/new-pricing-plan' element={<NewPricingPlan />} />
+
       </Routes>
     </Router>
   );

@@ -10,7 +10,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from apps.core.validators import check_valid_password
 #from apps.notifications.tasks import welcome_new_user_task
 #from apps.notifications.utils import reset_mail
-from apps.users.models import User
+from apps.users.models import Membership, User
 from apps.users.utils import generate_unique_key
 
 
@@ -174,3 +174,13 @@ class ForgotPasswordSerializer(serializers.Serializer):
             self.user = User.objects.get(email=value)
         except User.DoesNotExist:
             raise serializers.ValidationError("No user found with provided email!")
+
+
+class MembershipSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    class Meta:
+        model = Membership
+        fields = "__all__"
+
+    def get_name(self, obj):
+        return f"{obj.user.first_name} {obj.user.last_name}"
