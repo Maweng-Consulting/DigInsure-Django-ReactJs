@@ -7,6 +7,7 @@ import User from './pages/users/User';
 
 //Policies
 import Policies from './pages/policies/Policies';
+import PolicyDetails from './pages/policies/PolicyDetails';
 
 //Premiums
 import Premiums from './pages/premiums/Premiums';
@@ -37,7 +38,9 @@ function App() {
       <Routes>
         <Route path='/' exact element={<Home />} />
         <Route path='/users' element={<User />} />
+
         <Route path='/policies' element={<Policies />} />
+        <Route path='/policies/:id' element={<PolicyDetails />} />
 
         <Route path='/schemes' element={<Schemes />} />
         <Route path='/new-scheme' element={<NewScheme />} />

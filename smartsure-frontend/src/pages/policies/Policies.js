@@ -64,7 +64,7 @@ const Policies = () => {
                   <td>{policy.activation_date}</td>
                   <td>{policy.status}</td>
                   <td>
-                    <a href='#' className='btn btn-info btn-sm'>
+                    <a href={`/policies/${policy.id}`} className='btn btn-info btn-sm'>
                     <i class="bi bi-eye"></i>
                     </a>
                   </td>
