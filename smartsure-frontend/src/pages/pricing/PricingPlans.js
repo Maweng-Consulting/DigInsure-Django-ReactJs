@@ -21,7 +21,7 @@ const PricingPlans = () => {
        setPricingPlans(data)
     };
     getPricingPlans();
-  })
+  }, [])
 
   return (
     <Wrapper>
@@ -30,13 +30,9 @@ const PricingPlans = () => {
   <h1 className="h2">Pricing Plans</h1>
   <div className="btn-toolbar mb-2 mb-md-0">
     <div className="btn-group me-2">
-      <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-      <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-    </div>
-    <button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
 
-      This week
-    </button>
+    </div>
+    <a href='/new-pricing-plan' className='btn btn-primary'>New Pricing Plan</a>
   </div>
 </div>
 

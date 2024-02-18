@@ -24,7 +24,7 @@ class SchemeGroupAPIView(generics.ListCreateAPIView):
     serializer_class = SchemeGroupSerializer
 
 
-class SchemeGroupDetailAPIView(generics.ListCreateAPIView):
+class SchemeGroupDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = SchemeGroup.objects.all()
     serializer_class = SchemeGroupSerializer
 

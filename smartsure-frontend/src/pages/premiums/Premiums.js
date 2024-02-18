@@ -58,7 +58,7 @@ const Premiums = () => {
             {premiums.map((premium) => (
               <tr key={premium.id}>
                 <td>{premium.id}</td>
-                <td>{premium.member_name}</td>
+                <td>{premium.member}</td>
                 <td>{premium.amount}</td>
                 <td>{premium.expected_date}</td>
                 <td>{premium.status}</td>
