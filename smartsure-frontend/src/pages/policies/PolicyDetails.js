@@ -4,7 +4,9 @@ import Wrapper from '../../components/Wrapper';
 
 const PolicyDetails = () => {
     const [policy, setPolicy] = useState({});
-    const [premiums, setPremiums] = useState([])
+    const [premiums, setPremiums] = useState([]);
+    const [statusUpdates, setStatusUpdates] = useState([]);
+
     const { id } = useParams()
 
 
@@ -45,25 +47,72 @@ const PolicyDetails = () => {
         getPolicyPremiums();
     }, [])
 
+    useEffect(() => {
+      const getPolicyStatusUpdates = async() => {
+        let headersList = {
+          "Accept": "*/*",
+          "User-Agent": "Thunder Client (https://www.thunderclient.com)"
+         }
+         
+         let response = await fetch(`http://127.0.0.1:8000/policies/policy-status-updates/${id}/`, { 
+           method: "GET",
+           headers: headersList
+         });
+         
+         let data = await response.json();
+         console.log(data);     
+         setStatusUpdates(data);    
+      };
+      getPolicyStatusUpdates()
+    }, [])
+
 
   return (
     <Wrapper>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">Claims</h1>
-  <div class="btn-toolbar mb-2 mb-md-0">
-    <div class="btn-group me-2">
-      <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-    </div>
-    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+  <h1 class="h2">Policy Details</h1>
 
-      This week
-    </button>
+</div>
+<div className='row'>
+  <div className='col'>
+    <p><b>ID:</b> {policy.id}</p>
+    <p><b>Date Created</b>: {policy.created}</p>
+    <p>Policy Number: {policy.policy_number}</p>
+    <p>Start Date: {policy.start_date}</p>
+    <p>Activation Date: {policy.activation_date}</p>
+    <p>Premium: {policy.premium}</p>
+    <p>Status: <b>{policy.status}</b></p>
+  </div>
+  <div className='col'>
+  <div class="table-responsive small">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Prev. Status</th>
+        <th scope="col">Current Status</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+        {statusUpdates.map((update) => (
+            <tr key={update.id}>
+                <td>{update.id}</td>
+                <td>{update.current_status}</td>
+                <td>{update.next_status}</td>
+                
+          </tr>
+        ))}
+      
+    </tbody>
+  </table>
+</div>
   </div>
 </div>
-
+<hr/>
 <h5>Premiums</h5>
+<hr/>
 <div class="table-responsive small">
   <table class="table table-sm">
     <thead>

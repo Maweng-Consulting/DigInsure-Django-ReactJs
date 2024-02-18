@@ -15,3 +15,12 @@ class Policy(AbstractBaseModel):
 
     def __str__(self):
         return self.policy_number
+
+
+class PolicyStatusUpdate(AbstractBaseModel):
+    policy = models.ForeignKey(Policy, on_delete=models.CASCADE)
+    current_status = models.CharField(max_length=255)
+    next_status = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.policy.policy_number

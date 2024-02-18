@@ -14,5 +14,5 @@ class PolicyPaymentAPIView(generics.ListAPIView):
 
 
 class PolicyPremiumAPIView(generics.ListAPIView):
-    queryset = PolicyPremium.objects.all()
+    queryset = PolicyPremium.objects.all().order_by("-expected_date")
     serializer_class = PolicyPremiumSerializer
