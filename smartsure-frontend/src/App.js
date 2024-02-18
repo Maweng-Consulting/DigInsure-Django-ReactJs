@@ -20,9 +20,11 @@ import SchemeGroupDetail from './pages/scheme_groups/SchemeGroupDetail';
 
 // Schemes
 import Schemes from './pages/schemes/Schemes';
-import Claims from './pages/claims/Claims';
+import NewScheme from './pages/schemes/NewScheme';
+import EditScheme from './pages/schemes/EditScheme';
 
 //Claims
+import Claims from './pages/claims/Claims';
 
 //Pricing Plans
 import PricingPlans from './pages/pricing/PricingPlans';
@@ -36,7 +38,10 @@ function App() {
         <Route path='/' exact element={<Home />} />
         <Route path='/users' element={<User />} />
         <Route path='/policies' element={<Policies />} />
+
         <Route path='/schemes' element={<Schemes />} />
+        <Route path='/new-scheme' element={<NewScheme />} />
+        <Route path='/schemes/edit/:id' element={<EditScheme />} />
         
         <Route path='/scheme-groups' element={<SchemeGroups />} />
         <Route path='/scheme-groups/:id' element={<SchemeGroupDetail />} />

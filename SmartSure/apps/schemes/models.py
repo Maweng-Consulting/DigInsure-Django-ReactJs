@@ -61,6 +61,7 @@ class SchemeGroup(AbstractBaseModel):
     pricing_plan = models.ForeignKey("pricing.PricingPlan", on_delete=models.CASCADE, null=True, blank=True)
     cycle_type = models.CharField(max_length=255, choices=CYCLE_CHOICE_TYPES)
     description = models.TextField(null=True, blank=True)
+    premium = models.DecimalField(max_digits=100, decimal_places=2, default=0)
 
     def __str__(self):
         return self.name

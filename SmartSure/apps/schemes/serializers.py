@@ -15,6 +15,7 @@ class SchemeGroupSerializer(serializers.ModelSerializer):
     pricing_plan_name = serializers.SerializerMethodField()
     date_created = serializers.SerializerMethodField()
 
+
     class Meta:
         model = SchemeGroup
         fields = "__all__"

@@ -35,7 +35,7 @@ class PolicyPayment(AbstractBaseModel):
 class PolicyPremium(AbstractBaseModel):
     policy = models.ForeignKey("policies.Policy", on_delete=models.CASCADE)
     membership = models.ForeignKey("users.Membership", on_delete=models.SET_NULL, null=True)
-    scheme_group = models.ForeignKey("schemes.SchemeGroup", on_delete=models.SET_NULL, null=True)
+    scheme_group = models.ForeignKey("schemes.SchemeGroup", on_delete=models.SET_NULL, null=True, related_name="schemegroupmemberships")
     amount = models.DecimalField(max_digits=100, decimal_places=2)
     balance = models.DecimalField(max_digits=100, decimal_places=2)
     expected_date = models.DateField()
