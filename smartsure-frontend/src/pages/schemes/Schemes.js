@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Wrapper from '../../components/Wrapper';
 
+
 const Schemes = () => {
   const [schemes, setSchemes] = useState([])
+  
 
   useEffect(() => {
     let getSchemes = async()=> {
@@ -21,7 +23,7 @@ const Schemes = () => {
        setSchemes(data)
     };
     getSchemes()
-  }, [])
+  }, []);
 
   return (
     <Wrapper>
@@ -30,13 +32,9 @@ const Schemes = () => {
         <h1 className="h2">Schemes</h1>
         <div className="btn-toolbar mb-2 mb-md-0">
           <div className="btn-group me-2">
-            <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
 
-            This week
-          </button>
+          </div>
+          <a href='/new-scheme' className='btn btn-primary'>New Scheme</a>
         </div>
       </div>
 
@@ -55,7 +53,7 @@ const Schemes = () => {
           <tbody>
             
               {schemes.map((scheme) => (
-                <tr>
+                <tr key={scheme.id}>
                 <td>{scheme.id}</td>
                 <td>{scheme.name}</td>
                 <td>{scheme.scheme_type}</td>
@@ -66,7 +64,7 @@ const Schemes = () => {
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-primary btn-sm'>
+                  <a href={`/schemes/edit/${scheme.id}`} className='btn btn-primary btn-sm'>
                   <i className="bi bi-pencil-square"></i>
                   </a>
                 </td>
@@ -85,5 +83,6 @@ const Schemes = () => {
     </Wrapper>
   )
 }
+
 
 export default Schemes
