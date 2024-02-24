@@ -79,9 +79,10 @@ const SchemeGroupDetail = () => {
         <tr>
           <th scope="col">#</th>
           <th scope="col">Name</th>
+          <th scope="col">Cover Amount</th>
           <th scope="col">Premium</th>
           <th scope="col">Status</th>
-          <th scope="col">Role</th>
+          
           <th scope="col" colSpan={3}></th>
         </tr>
       </thead>
@@ -90,11 +91,11 @@ const SchemeGroupDetail = () => {
            <tr key={member.id}>
            <td>{member.id}</td>
            <td>{member.name}</td>
+           <td>{member.cover_amount}</td>
            <td>{member.premium}</td>
            <td>{member.status}</td>
-           <td>text</td>
            <td>
-             <a href='#' className='btn btn-info btn-sm'>
+             <a href={`/membership-details/${member.id}/${member.scheme_group}`} className='btn btn-info btn-sm'>
              <i className="bi bi-eye"></i>
              </a>
            </td>

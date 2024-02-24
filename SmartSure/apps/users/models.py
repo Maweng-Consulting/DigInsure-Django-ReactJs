@@ -43,6 +43,7 @@ class Membership(AbstractBaseModel):
     scheme_group = models.ForeignKey("schemes.SchemeGroup", on_delete=models.SET_NULL, null=True)
     membership_certificate = models.FileField(upload_to="membership_certificates", null=True)
     premium = models.DecimalField(max_digits=100, decimal_places=2)
+    cover_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     status = models.CharField(max_length=255, choices=MEMBERSHIP_STATUS_CHOICES)
 
     def __str__(self):
