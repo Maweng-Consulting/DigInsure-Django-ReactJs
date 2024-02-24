@@ -32,6 +32,13 @@ import PricingPlans from './pages/pricing/PricingPlans';
 import PricingPlanDetail from './pages/pricing/PricingPlanDetail';
 import NewPricingPlan from './pages/pricing/NewPricingPlan';
 
+// Sales Flow
+import StartSalesFlow from './pages/sales/StartSalesFlow';
+import Plans from './pages/sales/retail/Plans';
+
+// Memberships
+import MembershipDetails from './pages/memberships/MembershipDetails';
+
 function App() {
   return (
     <Router>
@@ -49,6 +56,8 @@ function App() {
         <Route path='/scheme-groups' element={<SchemeGroups />} />
         <Route path='/scheme-groups/:id' element={<SchemeGroupDetail />} />
 
+        <Route path='/membership-details/:membership/:scheme_group' element={<MembershipDetails />} />
+
         <Route path='/payments' element={<Payments />} />
         <Route path='/premiums' element={<Premiums />} />
         <Route path='/claims' element={<Claims />} />
@@ -56,6 +65,9 @@ function App() {
         <Route path='/pricing-plans' element={<PricingPlans />} />
         <Route path='/pricing-plans/:id' element={<PricingPlanDetail />} />
         <Route path='/new-pricing-plan' element={<NewPricingPlan />} />
+
+        <Route path='/start-sales-flow' element={<StartSalesFlow />} />
+        <Route path='/sales-flow/plans' element={<Plans />} />
 
       </Routes>
     </Router>

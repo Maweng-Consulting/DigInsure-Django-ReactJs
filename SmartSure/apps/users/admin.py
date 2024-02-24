@@ -4,4 +4,8 @@ from apps.users.models import Membership, User
 
 # Register your models here.
 admin.site.register(User)
-admin.site.register(Membership)
+
+
+@admin.register(Membership)
+class MembershipAdmin(admin.ModelAdmin):
+    list_display = ["id", "user", "scheme_group", "premium", "cover_amount"]

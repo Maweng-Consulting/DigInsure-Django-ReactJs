@@ -41,7 +41,7 @@ const Wrapper = (props) => {
             </li>
             <li className="nav-item">
               <a className="nav-link d-flex align-items-center gap-2" href="/users">
-
+              <i class="bi bi-people-fill"></i>
                 Users
               </a>
             </li>
@@ -83,6 +83,11 @@ const Wrapper = (props) => {
               <a className="nav-link d-flex align-items-center gap-2" href="/payments">
 
                 Payments
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link d-flex align-items-center gap-2" href="/start-sales-flow">
+                Sales Flow
               </a>
             </li>
           </ul>

@@ -29,13 +29,9 @@ const SchemeGroups = () => {
         <h1 className="h2">Scheme Groups</h1>
         <div className="btn-toolbar mb-2 mb-md-0">
           <div className="btn-group me-2">
-            <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
 
-            This week
-          </button>
+          </div>
+          <a href='' className='btn btn-primary'>New Scheme Group</a>
         </div>
       </div>
 
