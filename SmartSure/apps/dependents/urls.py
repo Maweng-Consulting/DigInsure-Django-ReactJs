@@ -5,7 +5,8 @@ from apps.dependents.views import (BeneficiaryDetailAPIView,
                                    DependentDetailAPIView,
                                    DependentListCreateAPIView,
                                    ExtendedDepedentListCreateAPIView,
-                                   ExtendedDependentDetailAPIView)
+                                   ExtendedDependentDetailAPIView,
+                                   FamilyMemberTypeListAPIView)
 
 urlpatterns = [
     path("dependents/", DependentListCreateAPIView.as_view(), name="dependents"),
@@ -16,4 +17,6 @@ urlpatterns = [
 
     path("extended-dependents/", ExtendedDepedentListCreateAPIView.as_view(), name="extended-dependents"),
     path("extended-dependents/<int:pk>/", ExtendedDependentDetailAPIView.as_view(), name="extended-dependents-details"),
+
+    path("family-member-types/", FamilyMemberTypeListAPIView.as_view(), name="family-member-types"),
 ]

@@ -58,16 +58,16 @@ const SchemeGroupDetail = () => {
         </div>
     <div className='row'>
       <div className='col'>
-      <p>ID: {schemeGroup.id}</p>
-      <p>Date Created: {schemeGroup.date_created}</p>
-        <p>Pricing Plan: {schemeGroup.pricing_plan_name}</p>
-        <p>Scheme: {schemeGroup.scheme_name}</p>
+      <p><b>ID:</b> {schemeGroup.id}</p>
+      <p><b>Date Created: </b>{schemeGroup.date_created}</p>
+        <p><b>Pricing Plan:</b> {schemeGroup.pricing_plan_name}</p>
+        <p><b>Scheme:</b> {schemeGroup.scheme_name}</p>
       </div>
       <div className='col'>
-      <p>Payment Frequency: {schemeGroup.period_type}</p>
-      <p>Payment Method: {schemeGroup.payment_method}</p>
-      <p>Premium: {schemeGroup.premium}</p>
-      <p>Policy Number: {schemeGroup.policy_number}</p>
+      <p><b>Payment Frequency:</b> {schemeGroup.period_type}</p>
+      <p><b>Payment Method:</b> {schemeGroup.payment_method}</p>
+      <p><b>Premium: </b>{schemeGroup.premium}</p>
+      <p><b>Policy Number: </b>{schemeGroup.policy_number}</p>
       </div>
     </div>
     <hr/>

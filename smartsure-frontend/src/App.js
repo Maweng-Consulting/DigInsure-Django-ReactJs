@@ -38,6 +38,7 @@ import Plans from './pages/sales/retail/Plans';
 
 // Memberships
 import MembershipDetails from './pages/memberships/MembershipDetails';
+import MemberPremiums from './pages/memberships/MemberPremiums';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
         <Route path='/scheme-groups/:id' element={<SchemeGroupDetail />} />
 
         <Route path='/membership-details/:membership/:scheme_group' element={<MembershipDetails />} />
+        <Route path='/membership-premiums/:membership/:scheme_group' element={<MemberPremiums />} />
 
         <Route path='/payments' element={<Payments />} />
         <Route path='/premiums' element={<Premiums />} />

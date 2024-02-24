@@ -2,13 +2,31 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from apps.dependents.models import Beneficiary, Dependent, ExtendedDependent
+from apps.dependents.models import (Beneficiary, Dependent, ExtendedDependent,
+                                    FamilyMemberType)
 from apps.dependents.serializers import (BeneficiarySerializer,
                                          DependentSerializer,
-                                         ExtendedDependentSerializer)
+                                         ExtendedDependentSerializer,
+                                         FamilyMemberTypeSerializer)
 
 
 # Create your views here.
+class FamilyMemberTypeListAPIView(generics.ListAPIView):
+    queryset = FamilyMemberType.objects.all()
+    serializer_class = FamilyMemberTypeSerializer
+
+    """
+    def get(self, request, *args, **kwargs):
+        category = request.query_params.get("category")
+
+        if category:
+            family_types = FamilyMemberType.objects.filter(category=category)
+            serializer = self.serializer_class(instance=family_types, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response([], status=status.HTTP_200_OK)
+    """
+
 class DependentListCreateAPIView(generics.ListCreateAPIView):
     queryset = Dependent.objects.all()
     serializer_class = DependentSerializer

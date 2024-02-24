@@ -77,12 +77,12 @@ const PolicyDetails = () => {
 <div className='row'>
   <div className='col'>
     <p><b>ID:</b> {policy.id}</p>
-    <p><b>Date Created</b>: {policy.created}</p>
-    <p>Policy Number: {policy.policy_number}</p>
-    <p>Start Date: {policy.start_date}</p>
-    <p>Activation Date: {policy.activation_date}</p>
-    <p>Premium: {policy.premium}</p>
-    <p>Status: <b>{policy.status}</b></p>
+    <p><b>Date Created</b>: {policy.date_created}</p>
+    <p><b>Policy Number:</b> {policy.policy_number}</p>
+    <p><b>Start Date:</b> {policy.start_date}</p>
+    <p><b>Activation Date:</b> {policy.activation_date}</p>
+    <p><b>Premium:</b> {policy.premium}</p>
+    <p><b>Status: </b>{policy.status}</p>
   </div>
   <div className='col'>
   <div class="table-responsive small">
@@ -92,7 +92,6 @@ const PolicyDetails = () => {
         <th scope="col">#</th>
         <th scope="col">Prev. Status</th>
         <th scope="col">Current Status</th>
-       
       </tr>
     </thead>
     <tbody>
@@ -107,6 +106,7 @@ const PolicyDetails = () => {
       
     </tbody>
   </table>
+  <a href='#' className='btn btn-warning'>Policy Document</a>
 </div>
   </div>
 </div>

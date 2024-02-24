@@ -178,9 +178,18 @@ class ForgotPasswordSerializer(serializers.Serializer):
 
 class MembershipSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
+    date_created = serializers.SerializerMethodField()
+    date_modified = serializers.SerializerMethodField()
+
     class Meta:
         model = Membership
         fields = "__all__"
 
     def get_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"
+
+    def get_date_created(self, obj):
+        return obj.created.date()
+
+    def get_date_modified(self, obj):
+        return obj.modified.date()

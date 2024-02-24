@@ -8,6 +8,10 @@ from apps.pricing.models import (MainMemberPricing, PricingPlan,
 # Register your models here.
 admin.site.register(PricingPlanCategory)
 admin.site.register(PricingPlan)
-admin.site.register(PricingPlanDependentPricing)
+
+@admin.register(PricingPlanDependentPricing)
+class PricingPlanDependentPricingAdmin(admin.ModelAdmin):
+    list_display = ["id", "pricing_plan", "min_age", "max_age", "premium", "cover_amount", "dependent_type"]
+
 admin.site.register(PricingPlanExtendedDependentPricing)
 admin.site.register(MainMemberPricing)
