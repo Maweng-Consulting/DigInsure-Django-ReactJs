@@ -7,6 +7,13 @@ from apps.core.models import AbstractBaseModel
 
 
 # Create your models here.
+class FamilyMemberType(AbstractBaseModel):
+    name = models.CharField(max_length=255)
+    category = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 class Dependent(AbstractBaseModel):
     membership = models.ForeignKey("users.Membership", on_delete=models.CASCADE)
     scheme_group = models.ForeignKey("schemes.SchemeGroup", on_delete=models.SET_NULL, null=True)

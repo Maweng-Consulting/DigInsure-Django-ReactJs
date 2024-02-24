@@ -1,6 +1,13 @@
 from rest_framework import serializers
 
-from apps.dependents.models import Beneficiary, Dependent, ExtendedDependent
+from apps.dependents.models import (Beneficiary, Dependent, ExtendedDependent,
+                                    FamilyMemberType)
+
+
+class FamilyMemberTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FamilyMemberType
+        fields = "__all__"
 
 
 class DependentSerializer(serializers.ModelSerializer):

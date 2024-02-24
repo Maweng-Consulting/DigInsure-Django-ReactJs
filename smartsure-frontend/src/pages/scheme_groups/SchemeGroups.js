@@ -55,7 +55,9 @@ const SchemeGroups = () => {
                 <td>{scheme_group.name}</td>
                 <td>{scheme_group.scheme_name}</td>
                 <td>{scheme_group.pricing_plan_name}</td>
-                <td>{scheme_group.policy_number}</td>
+                <td>
+                  <a href={`/policies/${scheme_group.policy}`}>{scheme_group.policy_number}</a>
+                </td>
                 <td>
                   <a href={`/scheme-groups/${scheme_group.id}`} className='btn btn-info btn-sm'>
                   <i className="bi bi-eye"></i>
