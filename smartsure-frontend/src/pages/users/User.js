@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Wrapper from '../../components/Wrapper';
+import { BACKEND_URL } from '../../services/constants';
 
 const User = () => {
   const [users, setUsers] = useState([])
@@ -10,7 +11,7 @@ const User = () => {
         "Accept": "*/*"
        }
        
-       let response = await fetch("http://127.0.0.1:8000/users/", { 
+       let response = await fetch(`${BACKEND_URL}/users/`, { 
          method: "GET",
          headers: headersList
        });
@@ -24,18 +25,17 @@ const User = () => {
 
   console.log(users)
 
-  const students = [
-    {
-      "id": 1,
-      "name": "James Doe",
-      "gender": "Male"
-    },
-    {
-      "id": 2,
-      "name": "John Doe",
-      "gender": "Male"
-    }
-  ]
+  const [usersCurrentPage, setUsersCurrentPage] = useState(1);
+  const usersPerPage = 10;
+  const indexOfLastUser = usersCurrentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+     // Change page
+  const handleUsersPageChange = (pageNumber) => {
+      setUsersCurrentPage(pageNumber);
+  };
+
 
   return (
     <Wrapper>
@@ -68,7 +68,7 @@ const User = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {currentUsers.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.first_name} {user.last_name}</td>
@@ -95,6 +95,17 @@ const User = () => {
             )}
           </tbody>
         </table>
+        <nav>
+  <ul className="pagination">
+          {[...Array(Math.ceil(users.length / usersPerPage)).keys()].map((number) => (
+            <li key={number + 1} className={`page-item ${number + 1 === usersCurrentPage ? 'active' : ''}`}>
+              <button className="page-link" onClick={() => handleUsersPageChange(number + 1)}>
+                {number + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
       </div>
     </main>
     </Wrapper>

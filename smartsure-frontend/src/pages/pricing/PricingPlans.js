@@ -21,7 +21,18 @@ const PricingPlans = () => {
        setPricingPlans(data)
     };
     getPricingPlans();
-  }, [])
+  }, []);
+
+  const [pricingPlansCurrentPage, setPricingPlansCurrentPage] = useState(1);
+  const pricingPlansPerPage = 5;
+  const indexOfLastPricingPlan = pricingPlansCurrentPage * pricingPlansPerPage;
+  const indexOfFirstPricingPlan = indexOfLastPricingPlan - pricingPlansPerPage;
+  const currentPricingPlans = pricingPlans.slice(indexOfFirstPricingPlan, indexOfLastPricingPlan);
+
+     // Change page
+  const handlePricingPlansPageChange = (pageNumber) => {
+      setPricingPlansCurrentPage(pageNumber);
+  };
 
   return (
     <Wrapper>
@@ -51,7 +62,7 @@ const PricingPlans = () => {
       </tr>
     </thead>
     <tbody>
-      {pricingPlans.map((plan) => (
+      {currentPricingPlans.map((plan) => (
         <tr key={plan.id}>
           <td>{plan.id}</td>
           <td>{plan.name}</td>
@@ -80,6 +91,17 @@ const PricingPlans = () => {
       
     </tbody>
   </table>
+  <nav>
+  <ul className="pagination">
+          {[...Array(Math.ceil(pricingPlans.length / pricingPlansPerPage)).keys()].map((number) => (
+            <li key={number + 1} className={`page-item ${number + 1 === pricingPlansCurrentPage ? 'active' : ''}`}>
+              <button className="page-link" onClick={() => handlePricingPlansPageChange(number + 1)}>
+                {number + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
 </div>
 </main>
 </Wrapper>

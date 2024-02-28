@@ -40,6 +40,9 @@ import Plans from './pages/sales/retail/Plans';
 import MembershipDetails from './pages/memberships/MembershipDetails';
 import MemberPremiums from './pages/memberships/MemberPremiums';
 
+// Family Policy Sales
+import FSchemeGroup from './pages/sales/lifeinsurance/family/SchemeGroup';
+
 function App() {
   return (
     <Router>
@@ -70,6 +73,8 @@ function App() {
 
         <Route path='/start-sales-flow' element={<StartSalesFlow />} />
         <Route path='/sales-flow/plans' element={<Plans />} />
+
+        <Route path='/sales-flow/family/sg' element={<FSchemeGroup />} />
 
       </Routes>
     </Router>

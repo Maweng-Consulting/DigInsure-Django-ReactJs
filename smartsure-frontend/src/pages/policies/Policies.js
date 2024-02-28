@@ -21,7 +21,18 @@ const Policies = () => {
        setPolicies(data)
     };
     getPolicies();
-  }, [])
+  }, []);
+
+  const [policiesCurrentPage, setPoliciesCurrentPage] = useState(1);
+  const policiesPerPage = 10;
+  const indexOfLastPolicy = policiesCurrentPage * policiesPerPage;
+  const indexOfFirstPolicy = indexOfLastPolicy - policiesPerPage;
+  const currentPolicies = policies.slice(indexOfFirstPolicy, indexOfLastPolicy);
+
+     // Change page
+  const handlePoliciesPageChange = (pageNumber) => {
+      setPoliciesCurrentPage(pageNumber);
+  };
 
   return (
     <Wrapper>
@@ -55,7 +66,7 @@ const Policies = () => {
             </tr>
           </thead>
           <tbody>
-            {policies.map((policy) => (
+            {currentPolicies.map((policy) => (
                 <tr key={policy.id}>
                   <td>{policy.id}</td>
                   <td>{policy.created}</td>
@@ -80,10 +91,19 @@ const Policies = () => {
                   </td>
                 </tr>
             ))}
-
-
           </tbody>
         </table>
+        <nav>
+  <ul className="pagination">
+          {[...Array(Math.ceil(policies.length / policiesPerPage)).keys()].map((number) => (
+            <li key={number + 1} className={`page-item ${number + 1 === policiesCurrentPage ? 'active' : ''}`}>
+              <button className="page-link" onClick={() => handlePoliciesPageChange(number + 1)}>
+                {number + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
       </div>
     </main>
     </Wrapper>
