@@ -2,8 +2,11 @@ from django.contrib import admin
 
 from apps.schemes.models import Scheme, SchemeGroup
 
+
 # Register your models here.
-admin.site.register(Scheme)
+@admin.register(Scheme)
+class SchemeAdmin(admin.ModelAdmin):
+    list_display = ["id", "name", "scheme_type"]
 
 @admin.register(SchemeGroup)
 class SchemeGroupAdmin(admin.ModelAdmin):
