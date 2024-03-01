@@ -33,9 +33,20 @@ class SchemePricingPlansAPIView(generics.ListAPIView):
         
         return Response([], status=status.HTTP_200_OK)
 
+
 class SchemeGroupAPIView(generics.ListCreateAPIView):
     queryset = SchemeGroup.objects.all()
     serializer_class = SchemeGroupSerializer
+
+    def get(self, request, *args, **kwargs):
+        scheme_id = request.query_params.get("scheme_id")
+
+        if scheme_id:
+            scheme_groups = SchemeGroup.objects.filter(scheme=scheme_id)
+            serializer = self.serializer_class(instance=scheme_groups, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return super().get(request, *args, **kwargs)
 
 
 class SchemeGroupDetailAPIView(generics.RetrieveUpdateDestroyAPIView):

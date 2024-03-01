@@ -129,7 +129,6 @@ const Schemes = () => {
             </tr>
           </thead>
           <tbody>
-            
               {currentSchemes.map((scheme) => (
                 <tr key={scheme.id}>
                 <td>{scheme.id}</td>
@@ -137,13 +136,13 @@ const Schemes = () => {
                 <td>{scheme.scheme_type}</td>
                 <td>{scheme.max_number_of_people}</td>
                 <td>
-                  <a href='#' className='btn btn-info btn-sm'>
+                  <a href={`/schemes/scheme-groups/${scheme.id}`} className='btn btn-info btn-sm'>
                   <i className="bi bi-eye"></i>
                   </a>
                 </td>
                 
                 <td>
-                <button className="btn btn-primary" onClick={() => openModal(scheme)}>
+                <button className="btn btn-primary btn-sm" onClick={() => openModal(scheme)}>
                 <i className="bi bi-pencil-square"></i>
                 </button>
                 </td>
@@ -277,7 +276,7 @@ const DeleteSchemeModal = ({scheme, closeDeleteModal}) => {
                   <p>Are you sure you want to delete: {scheme.name}</p>
                 </div>
               </div>
-              <input type='number' name="scheme_id" id="scheme_id" value={scheme.id} readOnly/> 
+              <input type='number' hidden name="scheme_id" id="scheme_id" value={scheme.id} readOnly/> 
 
               <div className='text-center'>
                 <button type="submit" className="btn btn-primary">Yes, Delete!</button>

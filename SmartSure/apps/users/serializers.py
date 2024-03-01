@@ -10,8 +10,49 @@ from rest_framework.exceptions import AuthenticationFailed
 from apps.core.validators import check_valid_password
 #from apps.notifications.tasks import welcome_new_user_task
 #from apps.notifications.utils import reset_mail
-from apps.users.models import Membership, User
+from apps.users.models import Broker, BrokerAge, Membership, SalesAgent, User
 from apps.users.utils import generate_unique_key
+
+
+class BrokerageSerializer(serializers.ModelSerializer):
+    date_created = serializers.SerializerMethodField()
+    class Meta:
+        model = BrokerAge
+        fields = "__all__"
+
+    def get_date_created(self, obj):
+        return obj.created.date()
+
+
+class CreateBrokerSerializer(serializers.Serializer):
+    brokerage = serializers.IntegerField()
+    username = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+    first_name = serializers.CharField(max_length=255)
+    last_name = serializers.CharField(max_length=255)
+    id_number = serializers.CharField(max_length=255)
+    role = serializers.CharField(max_length=255)
+    phone_number = serializers.CharField(max_length=255)
+    gender = serializers.CharField(max_length=255)
+    date_of_birth = serializers.CharField(max_length=255)
+    city = serializers.CharField(max_length=255)
+    country = serializers.CharField(max_length=255)
+    physical_address = serializers.CharField(max_length=255)
+    postal_address = serializers.CharField(max_length=255)
+
+
+class BrokerSerializer(serializers.ModelSerializer):
+    brokerage = serializers.SerializerMethodField()
+    class Meta:
+        model = User 
+        fields = "__all__"
+        extra_kwargs = {"password": {"read_only": True}}
+
+    def get_brokerage(self, obj):
+        broker = obj.brokers
+        return broker.brokerage.name
+        
+ 
 
 
 class UserListSerializer(serializers.ModelSerializer):
@@ -55,7 +96,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             "gender",
             "date_of_birth",
             "country",
-            "address",
+            "physical_address",
+            "postal_address",
         )
         extra_kwargs = {"password": {"write_only": True}}
 
@@ -95,6 +137,50 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise e
 
         return user
+
+
+class CreateSalesAgentSerializer(serializers.Serializer):
+    brokerage = serializers.IntegerField()
+    broker = serializers.IntegerField()
+    username = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+    first_name = serializers.CharField(max_length=255)
+    last_name = serializers.CharField(max_length=255)
+    id_number = serializers.CharField(max_length=255)
+    role = serializers.CharField(max_length=255)
+    phone_number = serializers.CharField(max_length=255)
+    gender = serializers.CharField(max_length=255)
+    date_of_birth = serializers.CharField(max_length=255)
+    city = serializers.CharField(max_length=255)
+    country = serializers.CharField(max_length=255)
+    physical_address = serializers.CharField(max_length=255)
+    postal_address = serializers.CharField(max_length=255)
+
+
+class SalesAgentSerializer(serializers.ModelSerializer):
+    broker = serializers.SerializerMethodField()
+    brokerage = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = "__all__"
+        extra_kwargs = {"password": {"read_only": True}}
+
+    def get_broker(self, obj):
+        agent = SalesAgent.objects.filter(user_id=obj.id).first()
+
+        if agent:
+            return f"{agent.user.first_name} {agent.user.last_name}"
+        else:
+            return ""
+
+    def get_brokerage(self, obj):
+        agent = SalesAgent.objects.filter(user_id=obj.id).first()
+        if agent:
+            return f"{agent.brokerage.name}"
+        else:
+            return ""
+
 
 
 class UserLoginSerializer(AuthTokenSerializer):

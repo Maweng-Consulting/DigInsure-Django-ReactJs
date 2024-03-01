@@ -3,7 +3,13 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Wrapper from './components/Wrapper';
+
+
+// Users
 import User from './pages/users/User';
+import Agents from './pages/agents/Agents';
+import Brokers from './pages/brokers/Brokers';
+import Brokerages from './pages/brokers/Brokerages';
 
 //Policies
 import Policies from './pages/policies/Policies';
@@ -23,6 +29,7 @@ import SchemeGroupDetail from './pages/scheme_groups/SchemeGroupDetail';
 import Schemes from './pages/schemes/Schemes';
 import NewScheme from './pages/schemes/NewScheme';
 import EditScheme from './pages/schemes/EditScheme';
+import SchemeGroupsList from './pages/schemes/SchemeGroupsList';
 
 //Claims
 import Claims from './pages/claims/Claims';
@@ -48,7 +55,12 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' exact element={<Home />} />
+
+
         <Route path='/users' element={<User />} />
+        <Route path='/users/agents' element={<Agents />} />
+        <Route path='/users/brokers' element={<Brokers />} />
+        <Route path='/users/brokerages' element={<Brokerages />} />
 
         <Route path='/policies' element={<Policies />} />
         <Route path='/policies/:id' element={<PolicyDetails />} />
@@ -56,6 +68,7 @@ function App() {
         <Route path='/schemes' element={<Schemes />} />
         <Route path='/new-scheme' element={<NewScheme />} />
         <Route path='/schemes/edit/:id' element={<EditScheme />} />
+        <Route path='/schemes/scheme-groups/:id' element={<SchemeGroupsList />} />
         
         <Route path='/scheme-groups' element={<SchemeGroups />} />
         <Route path='/scheme-groups/:id' element={<SchemeGroupDetail />} />
