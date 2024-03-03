@@ -22,6 +22,17 @@ const SchemeGroups = () => {
     getSchemeGroups();
   }, [])
 
+  const [schemeGroupsCurrentPage, setSchemeGroupsCurrentPage] = useState(1);
+  const schemeGroupsPerPage = 10;
+  const indexOfLastSchemeGroup = schemeGroupsCurrentPage * schemeGroupsPerPage;
+  const indexOfFirstSchemeGroup = indexOfLastSchemeGroup - schemeGroupsPerPage;
+  const currentSchemeGroups = schemeGroups.slice(indexOfFirstSchemeGroup, indexOfLastSchemeGroup);
+
+     // Change page
+  const handleSchemeGroupsPageChange = (pageNumber) => {
+      setSchemeGroupsCurrentPage(pageNumber);
+  };
+
   return (
     <Wrapper>
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -75,10 +86,19 @@ const SchemeGroups = () => {
                 </td>
              </tr>
             ))}
-           
-            
           </tbody>
         </table>
+        <nav>
+  <ul className="pagination">
+          {[...Array(Math.ceil(schemeGroups.length / schemeGroupsPerPage)).keys()].map((number) => (
+            <li key={number + 1} className={`page-item ${number + 1 === schemeGroupsCurrentPage ? 'active' : ''}`}>
+              <button className="page-link" onClick={() => handleSchemeGroupsPageChange(number + 1)}>
+                {number + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
       </div>
     </main>
     </Wrapper>

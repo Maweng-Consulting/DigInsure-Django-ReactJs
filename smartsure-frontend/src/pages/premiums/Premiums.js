@@ -22,7 +22,18 @@ const Premiums = () => {
        
     };
     getPolicyPremiums();
-  }, [])
+  }, []);
+
+  const [premiumsCurrentPage, setPremiumsCurrentPage] = useState(1);
+  const premiumsPerPage = 10;
+  const indexOfLastPremium = premiumsCurrentPage * premiumsPerPage;
+  const indexOfFirstPremium = indexOfLastPremium - premiumsPerPage;
+  const currentPremiums = premiums.slice(indexOfFirstPremium, indexOfLastPremium);
+
+     // Change page
+  const handlePremiumsPageChange = (pageNumber) => {
+      setPremiumsCurrentPage(pageNumber);
+  };
 
   return (
     <Wrapper>
@@ -79,9 +90,19 @@ const Premiums = () => {
                 </td>
             </tr>
             ))}
-            
           </tbody>
         </table>
+        <nav>
+  <ul className="pagination">
+          {[...Array(Math.ceil(premiums.length / premiumsPerPage)).keys()].map((number) => (
+            <li key={number + 1} className={`page-item ${number + 1 === premiumsCurrentPage ? 'active' : ''}`}>
+              <button className="page-link" onClick={() => handlePremiumsPageChange(number + 1)}>
+                {number + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
       </div>
     </main>
     </Wrapper>

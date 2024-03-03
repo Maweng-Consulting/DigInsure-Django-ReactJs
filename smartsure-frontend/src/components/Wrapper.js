@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 
 const Wrapper = (props) => {
   return (
@@ -41,10 +41,31 @@ const Wrapper = (props) => {
             </li>
             <li className="nav-item">
               <a className="nav-link d-flex align-items-center gap-2" href="/users">
-              <i class="bi bi-people-fill"></i>
+              <i className="bi bi-people-fill"></i>
                 Users
               </a>
             </li>
+            <li className="nav-item">
+              <a className="nav-link d-flex align-items-center gap-2" href="/users/agents">
+              <i className="bi bi-people-fill"></i>
+                Agents
+              </a>
+            </li>
+
+            <li className="nav-item">
+              <a className="nav-link d-flex align-items-center gap-2" href="/users/brokers">
+              <i className="bi bi-people-fill"></i>
+                Brokers
+              </a>
+            </li>
+
+            <li className="nav-item">
+              <a className="nav-link d-flex align-items-center gap-2" href="/users/brokerages">
+              <i className="bi bi-people-fill"></i>
+                Brokerages
+              </a>
+            </li>
+
             <li className="nav-item">
               <a className="nav-link d-flex align-items-center gap-2" href="/schemes">
 
