@@ -43,6 +43,8 @@ class CreateBrokerSerializer(serializers.Serializer):
 
 class BrokerSerializer(serializers.ModelSerializer):
     brokerage = serializers.SerializerMethodField()
+    date_created = serializers.SerializerMethodField()
+
     class Meta:
         model = User 
         fields = "__all__"
@@ -52,8 +54,8 @@ class BrokerSerializer(serializers.ModelSerializer):
         broker = obj.brokers
         return broker.brokerage.name
         
- 
-
+    def get_date_created(self, obj):
+        return obj.created.date()
 
 class UserListSerializer(serializers.ModelSerializer):
    
@@ -160,6 +162,7 @@ class CreateSalesAgentSerializer(serializers.Serializer):
 class SalesAgentSerializer(serializers.ModelSerializer):
     broker = serializers.SerializerMethodField()
     brokerage = serializers.SerializerMethodField()
+    date_created = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -180,8 +183,9 @@ class SalesAgentSerializer(serializers.ModelSerializer):
             return f"{agent.brokerage.name}"
         else:
             return ""
-
-
+    
+    def get_date_created(self, obj):
+        return obj.created.date()
 
 class UserLoginSerializer(AuthTokenSerializer):
     def validate(self, attrs):

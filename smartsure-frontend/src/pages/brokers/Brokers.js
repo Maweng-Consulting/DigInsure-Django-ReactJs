@@ -130,11 +130,11 @@ const Brokers = () => {
           <thead>
             <tr>
               <th scope="col">#</th>
+              <th scope="col">Date Joined</th>
               <th scope="col">Name</th>
               <th scope="col">Brokerage</th>
               <th scope="col">Email</th>
               <th scope="col">Username</th>
-              <th scope="col">Role</th>
               <th scope="col" colSpan={3}></th>
             </tr>
           </thead>
@@ -142,11 +142,11 @@ const Brokers = () => {
             {currentUsers.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
+                <td>{user.date_created}</td>
                 <td>{user.first_name} {user.last_name}</td>
                 <td>{user.brokerage}</td>
                 <td>{user.email}</td>
                 <td>{user.username}</td>
-                <td>{user.role}</td>
                 <td>
                   <a href='#' className='btn btn-info btn-sm'>
                   <i className="bi bi-eye"></i>

@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import Wrapper from '../../components/Wrapper';
 import  { BACKEND_URL } from '../../services/constants';
 
+import EditSalesAgent from './EditSalesAgent';
+import DeleteAgent from './DeleteAgent';
+
 
 const Agents = () => {
-    const [users, setUsers] = useState([])
-    const [brokerages, setBrokerages] = useState([])
-    const[brokers, setBrokers] = useState([])
+    const [users, setUsers] = useState([]);
+    const [brokerages, setBrokerages] = useState([]);
+    const[brokers, setBrokers] = useState([]);
+
+    const [showAgentEdit, setShowAgentEdit] = useState(false);
+
+
+    const [showAgentDelete, setShowAgentDelete] = useState(false);
+    const [agentToDelete, setAgentToDelete] = useState(null);
 
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
@@ -23,9 +32,20 @@ const Agents = () => {
     const [country, setCountry] = useState(null);
     const [role, setRole] = useState("Agent")
     const [dateOfBirth, setDateOfBirth] = useState(null);
+
+    const closeAgentEditModal =()=> {
+      setShowAgentEdit(false)
+    }
+
+    const openSalesAgentDeleteModal = (agent) => {
+      setAgentToDelete(agent);
+      setShowAgentDelete(true)
+    }
+
+    const closeAgentDeleteModal =() => {
+      setShowAgentDelete(false)
+    }
     
-
-
   useEffect(() => {
     const getUsers = async(e) => {
       let headersList = {
@@ -142,16 +162,15 @@ const Agents = () => {
         </div>
       </div>
 
-    
       <div className="table-responsive small">
         <table className="table table-sm">
           <thead>
             <tr>
               <th scope="col">#</th>
+              <th scope="col">Date Joined</th>
               <th scope="col">Name</th>
               <th scope="col">Email</th>
               <th scope="col">Broker</th>
-              <th scope="col">Brokerage</th>
               <th scope="col" colSpan={3}></th>
             </tr>
           </thead>
@@ -159,22 +178,23 @@ const Agents = () => {
             {currentUsers.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
+                <td>{user.date_created}</td>
                 <td>{user.first_name} {user.last_name}</td>
                 <td>{user.email}</td>
-                <td>{user.broker}</td>
-                <td>{user.brokerage}</td>
+                <td>{user.broker}-({user.brokerage})</td>
+              
                 <td>
                   <a href='#' className='btn btn-info btn-sm'>
                   <i className="bi bi-eye"></i>
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-primary btn-sm'>
+                  <a href='#' className='btn btn-primary btn-sm' onClick={() => setShowAgentEdit(true)}>
                   <i className="bi bi-pencil-square"></i>
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-danger btn-sm'>
+                  <a href='#' className='btn btn-danger btn-sm' onClick={() => openSalesAgentDeleteModal(user)}>
                   <i className="bi bi-trash"></i>
                   </a>
                 </td>
@@ -197,12 +217,13 @@ const Agents = () => {
       </div>
     </main>
 
-    <div className="modal fade" id="newAgentModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <div className="modal fade" id="newAgentModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
         <h1 className="text-center fs-5" id="exampleModalLabel">New Sales Agent</h1>
-        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setShowAgentEdit(false)}></button>
       </div>
       <div className="modal-body">
       <form onSubmit={handleSubmit}>
@@ -310,9 +331,13 @@ const Agents = () => {
     </div>
   </div>
 </div>
+
+{showAgentEdit && <EditSalesAgent closeModal={closeAgentEditModal} />}
+{showAgentDelete && <DeleteAgent agent={agentToDelete} closeDeleteModal={closeAgentDeleteModal} />}
   
     </Wrapper>
   )
 }
+
 
 export default Agents

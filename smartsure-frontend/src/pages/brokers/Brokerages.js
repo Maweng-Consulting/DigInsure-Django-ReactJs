@@ -112,7 +112,7 @@ const Brokerages = () => {
                 <td>{brokerage.name}</td>
                 <td>{brokerage.contact_person}</td>
                 <td>{brokerage.phone_number}</td>
-                <td>{brokerage.postal_address},{brokerage.city}-{brokerage.country}</td>
+                <td>{brokerage.city}-{brokerage.country}</td>
                 <td>
                   <a href='#' className='btn btn-info btn-sm'>
                   <i className="bi bi-eye"></i>
