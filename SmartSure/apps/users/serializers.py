@@ -42,17 +42,24 @@ class CreateBrokerSerializer(serializers.Serializer):
 
 
 class BrokerSerializer(serializers.ModelSerializer):
-    brokerage = serializers.SerializerMethodField()
+    brokerage_name = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
     date_created = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
 
     class Meta:
-        model = User 
+        model = Broker 
         fields = "__all__"
         extra_kwargs = {"password": {"read_only": True}}
 
-    def get_brokerage(self, obj):
-        broker = obj.brokers
-        return broker.brokerage.name
+    def get_brokerage_name(self, obj):
+        return obj.brokerage.name
+
+    def get_name(self, obj):
+        return f"{obj.user.first_name} {obj.user.last_name}"
+    
+    def get_email(self, obj):
+        return obj.user.email
         
     def get_date_created(self, obj):
         return obj.created.date()
@@ -159,33 +166,46 @@ class CreateSalesAgentSerializer(serializers.Serializer):
     postal_address = serializers.CharField(max_length=255)
 
 
+class EditSalesAgentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SalesAgent
+        fields = "__all__"
+
 class SalesAgentSerializer(serializers.ModelSerializer):
-    broker = serializers.SerializerMethodField()
-    brokerage = serializers.SerializerMethodField()
+    broker_name = serializers.SerializerMethodField()
+    brokerage_name = serializers.SerializerMethodField()
     date_created = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
 
     class Meta:
-        model = User
+        model = SalesAgent
         fields = "__all__"
-        extra_kwargs = {"password": {"read_only": True}}
+        #extra_kwargs = {"password": {"read_only": True}}
+    
+    def get_name(self, obj):
+        return f"{obj.user.first_name} {obj.user.last_name}"
+    
+    def get_email(self, obj):
+        return obj.user.email
 
-    def get_broker(self, obj):
-        agent = SalesAgent.objects.filter(user_id=obj.id).first()
-
-        if agent:
-            return f"{agent.user.first_name} {agent.user.last_name}"
-        else:
-            return ""
-
-    def get_brokerage(self, obj):
-        agent = SalesAgent.objects.filter(user_id=obj.id).first()
-        if agent:
-            return f"{agent.brokerage.name}"
+    def get_broker_name(self, obj):
+        if obj.broker:
+            return f"{obj.broker.user.first_name} {obj.broker.user.last_name}"
         else:
             return ""
     
+
+    def get_brokerage_name(self, obj):
+        if obj.brokerage:
+            return obj.brokerage.name
+        else:
+            return ""
+
+
     def get_date_created(self, obj):
         return obj.created.date()
+
 
 class UserLoginSerializer(AuthTokenSerializer):
     def validate(self, attrs):

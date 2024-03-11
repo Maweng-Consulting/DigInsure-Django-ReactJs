@@ -14,8 +14,6 @@ const Schemes = () => {
   const [selectScheme, setSelectScheme] = useState(false);
 
   
-
-
   const [name, setName] = useState(null);
   const [numberOfPeople, setNumberOfPeople] = useState(null);
   const [schemeType, setSchemeType] = useState(null);

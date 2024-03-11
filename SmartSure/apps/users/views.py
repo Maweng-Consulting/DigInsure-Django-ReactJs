@@ -12,6 +12,7 @@ from apps.users.serializers import (BrokerageSerializer, BrokerSerializer,
                                     ChangePasswordSerializer,
                                     CreateBrokerSerializer,
                                     CreateSalesAgentSerializer,
+                                    EditSalesAgentSerializer,
                                     EditUserProfileSerializer,
                                     ForgotPasswordSerializer,
                                     MembershipSerializer, RegisterSerializer,
@@ -36,7 +37,7 @@ class UserListAPIView(generics.ListAPIView):
 
 
 class BrokerListAPIView(generics.ListAPIView):
-    queryset = User.objects.filter(role="Broker")
+    queryset = Broker.objects.all()
     serializer_class = BrokerSerializer
 
     def get(self, request, *args, **kwargs):
@@ -117,7 +118,7 @@ class BrokerageDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class SalesAgentAPIView(generics.ListCreateAPIView):
-    queryset = User.objects.filter(role="Agent")
+    queryset = SalesAgent.objects.all()
     serializer_class = SalesAgentSerializer
 
     def post(self, request, *args, **kwargs):
@@ -126,7 +127,6 @@ class SalesAgentAPIView(generics.ListCreateAPIView):
 
         if serializer.is_valid(raise_exception=True):
             with transaction.atomic():
-
                 brokerage = serializer.validated_data.get("brokerage")
                 broker_id = serializer.validated_data.get("broker")
                 username = serializer.validated_data.get("username")
@@ -173,7 +173,18 @@ class SalesAgentAPIView(generics.ListCreateAPIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
+
+class SalesAgentEditAPIView(generics.RetrieveUpdateAPIView):
+    queryset = SalesAgent.objects.all()
+    serializer_class = EditSalesAgentSerializer    
+
+    lookup_field = "pk"
+
+    def update(self, request, *args, **kwargs):
+        data = request.data
+        print(data)
+        return super().update(request, *args, **kwargs)
+
 class SalesAgentDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = SalesAgentSerializer

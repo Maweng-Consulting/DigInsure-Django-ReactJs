@@ -17,6 +17,9 @@ const Agents = () => {
     const [showAgentDelete, setShowAgentDelete] = useState(false);
     const [agentToDelete, setAgentToDelete] = useState(null);
 
+    const [selectedAgent, setSelectedAgent] = useState(null)
+    
+
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [idNumber, setIdNumber] = useState(null);
@@ -32,6 +35,11 @@ const Agents = () => {
     const [country, setCountry] = useState(null);
     const [role, setRole] = useState("Agent")
     const [dateOfBirth, setDateOfBirth] = useState(null);
+
+    const openAgentEditModal = (agent) => {
+      setSelectedAgent(agent);
+      setShowAgentEdit(true);
+    }
 
     const closeAgentEditModal =()=> {
       setShowAgentEdit(false)
@@ -175,13 +183,13 @@ const Agents = () => {
             </tr>
           </thead>
           <tbody>
-            {currentUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.date_created}</td>
-                <td>{user.first_name} {user.last_name}</td>
-                <td>{user.email}</td>
-                <td>{user.broker}-({user.brokerage})</td>
+            {currentUsers.map((agent) => (
+              <tr key={agent.id}>
+                <td>{agent.id}</td>
+                <td>{agent.date_created}</td>
+                <td>{agent.name}</td>
+                <td>{agent.email}</td>
+                <td>{agent.broker_name}-({agent.brokerage_name})</td>
               
                 <td>
                   <a href='#' className='btn btn-info btn-sm'>
@@ -189,12 +197,12 @@ const Agents = () => {
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-primary btn-sm' onClick={() => setShowAgentEdit(true)}>
+                  <a href='#' className='btn btn-primary btn-sm' onClick={() => openAgentEditModal(agent)}>
                   <i className="bi bi-pencil-square"></i>
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-danger btn-sm' onClick={() => openSalesAgentDeleteModal(user)}>
+                  <a href='#' className='btn btn-danger btn-sm' onClick={() => openSalesAgentDeleteModal(agent)}>
                   <i className="bi bi-trash"></i>
                   </a>
                 </td>
@@ -332,12 +340,12 @@ const Agents = () => {
   </div>
 </div>
 
-{showAgentEdit && <EditSalesAgent closeModal={closeAgentEditModal} />}
+{showAgentEdit && <EditSalesAgent agent={selectedAgent} closeModal={closeAgentEditModal} />}
 {showAgentDelete && <DeleteAgent agent={agentToDelete} closeDeleteModal={closeAgentDeleteModal} />}
-  
     </Wrapper>
   )
 }
+
 
 
 export default Agents

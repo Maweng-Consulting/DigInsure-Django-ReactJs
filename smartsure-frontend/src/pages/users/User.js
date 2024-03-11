@@ -2,8 +2,14 @@ import React, {useEffect, useState} from 'react';
 import Wrapper from '../../components/Wrapper';
 import { BACKEND_URL } from '../../services/constants';
 
+import EditUser from './EditUser';
+import DeleteUser from './DeleteUser';
+import UserFilter from './UserFilter';
+
 const User = () => {
   const [users, setUsers] = useState([])
+  const [selectedUserType, setSelectedUserType] = useState(null);
+
 
   useEffect(() => {
     const getUsers = async(e) => {
@@ -25,6 +31,8 @@ const User = () => {
 
   console.log(users)
 
+  const filteredUsers = selectedUserType ? users.filter(user => user.role === selectedUserType) : users
+
   const [usersCurrentPage, setUsersCurrentPage] = useState(1);
   const usersPerPage = 10;
   const indexOfLastUser = usersCurrentPage * usersPerPage;
@@ -36,6 +44,30 @@ const User = () => {
       setUsersCurrentPage(pageNumber);
   };
 
+  //User Edit Modal
+  const [showUserEditModal, setShowUserEditModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const openUserEditModal = (user) => {
+    setSelectedUser(user);
+    setShowUserEditModal(true)
+  };
+
+  const closeUserEditModal = () => {
+    setShowUserEditModal(false)
+  };
+
+  // User to Delete
+  const [showUserDeleteModal, setShowUserDeleteModal] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
+
+  const openUserDeleteModal = (user) => {
+    setUserToDelete(user);
+    setShowUserDeleteModal(true);
+  }
+
+  const closeUserDeleteModal = () => {
+    setShowUserDeleteModal(false);
+  }
 
   return (
     <Wrapper>
@@ -43,14 +75,7 @@ const User = () => {
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 className="h2">Users</h1>
         <div className="btn-toolbar mb-2 mb-md-0">
-          <div className="btn-group me-2">
-            <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-
-            This week
-          </button>
+          <UserFilter  />
         </div>
       </div>
 
@@ -81,12 +106,12 @@ const User = () => {
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-primary btn-sm'>
+                  <a href='#' className='btn btn-primary btn-sm' onClick={() => openUserEditModal(user)}>
                   <i className="bi bi-pencil-square"></i>
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-danger btn-sm'>
+                  <a href='#' className='btn btn-danger btn-sm' onClick={() => openUserDeleteModal(user)}>
                   <i className="bi bi-trash"></i>
                   </a>
                 </td>
@@ -107,7 +132,10 @@ const User = () => {
         </ul>
       </nav>
       </div>
+      {showUserEditModal && <EditUser user={selectedUser} closeUserEditModal={closeUserEditModal} />}
+      {showUserDeleteModal && <DeleteUser user={userToDelete} closeModal={closeUserDeleteModal} />}
     </main>
+    
     </Wrapper>
   )
 }

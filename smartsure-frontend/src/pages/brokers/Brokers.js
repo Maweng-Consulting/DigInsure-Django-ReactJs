@@ -3,10 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from '../../services/constants';
 import Wrapper from '../../components/Wrapper';
 
+import EditBroker from './EditBroker';
+import DeleteBroker from './DeleteBroker';
+
 const Brokers = () => {
     const navigate = useNavigate()
     const [users, setUsers] = useState([])
     const [brokerages, setBrokerages] = useState([])
+
+    const [selectedBroker, setSelectedBroker] = useState(null);
+    const [showBrokerEditModal, setShowBrokerEditModal] = useState(false);
+
+    const [brokerToDelete, setBrokerToDelete] = useState(null);
+    const [showBrokerDeleteModal, setShowBrokerDeleteModal] = useState(false);
 
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
@@ -24,6 +33,23 @@ const Brokers = () => {
     const [dateOfBirth, setDateOfBirth] = useState(null);
 
 
+    const openBrokerEditModal = (broker) => {
+      setShowBrokerEditModal(true);
+      setSelectedBroker(broker);
+    }
+
+    const closeBrokerEditModal = () => {
+      setShowBrokerEditModal(false);
+    }
+
+    const openBrokerDeleteModal = (broker) => {
+      setShowBrokerDeleteModal(true);
+      setBrokerToDelete(broker);
+    }
+
+    const closeBrokerDeleteModal = () => {
+      setShowBrokerDeleteModal(false)
+    }
 
   useEffect(() => {
     const getUsers = async(e) => {
@@ -134,31 +160,30 @@ const Brokers = () => {
               <th scope="col">Name</th>
               <th scope="col">Brokerage</th>
               <th scope="col">Email</th>
-              <th scope="col">Username</th>
+
               <th scope="col" colSpan={3}></th>
             </tr>
           </thead>
           <tbody>
-            {currentUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.date_created}</td>
-                <td>{user.first_name} {user.last_name}</td>
-                <td>{user.brokerage}</td>
-                <td>{user.email}</td>
-                <td>{user.username}</td>
+            {currentUsers.map((broker) => (
+              <tr key={broker.id}>
+                <td>{broker.id}</td>
+                <td>{broker.date_created}</td>
+                <td>{broker.name}</td>
+                <td>{broker.brokerage_name}</td>
+                <td>{broker.email}</td>
                 <td>
                   <a href='#' className='btn btn-info btn-sm'>
                   <i className="bi bi-eye"></i>
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-primary btn-sm'>
+                  <a href='#' className='btn btn-primary btn-sm' onClick={() => openBrokerEditModal(broker)}>
                   <i className="bi bi-pencil-square"></i>
                   </a>
                 </td>
                 <td>
-                  <a href='#' className='btn btn-danger btn-sm'>
+                  <a href='#' className='btn btn-danger btn-sm' onClick={() => openBrokerDeleteModal(broker)}>
                   <i className="bi bi-trash"></i>
                   </a>
                 </td>
@@ -281,6 +306,9 @@ const Brokers = () => {
     </div>
   </div>
 </div>
+
+{showBrokerEditModal && <EditBroker broker={selectedBroker} closeBrokerEditModal={closeBrokerEditModal} />}
+{showBrokerDeleteModal && <DeleteBroker broker={brokerToDelete} closeBrokerDeleteModal={closeBrokerDeleteModal} />}
   
     </Wrapper>
   )
