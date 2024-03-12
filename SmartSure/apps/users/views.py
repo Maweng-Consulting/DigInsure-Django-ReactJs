@@ -192,7 +192,7 @@ class SalesAgentDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = "pk"
 
 
-class EditUserProfileAPIView(generics.UpdateAPIView):
+class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = EditUserProfileSerializer
 

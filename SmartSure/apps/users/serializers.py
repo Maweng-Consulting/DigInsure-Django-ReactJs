@@ -53,7 +53,10 @@ class BrokerSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"read_only": True}}
 
     def get_brokerage_name(self, obj):
-        return obj.brokerage.name
+        if obj.brokerage:
+            return obj.brokerage.name
+        else:
+            return ""
 
     def get_name(self, obj):
         return f"{obj.user.first_name} {obj.user.last_name}"
@@ -83,9 +86,11 @@ class EditUserProfileSerializer(serializers.ModelSerializer):
             "role",
             "phone_number",
             "gender",
-            "address",
             "city",
             "country",
+            "postal_address",
+            "physical_address",
+            "date_of_birth",
         ]
 
 

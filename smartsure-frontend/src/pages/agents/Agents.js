@@ -5,6 +5,8 @@ import  { BACKEND_URL } from '../../services/constants';
 import EditSalesAgent from './EditSalesAgent';
 import DeleteAgent from './DeleteAgent';
 
+//components
+import AgentsList from './components/AgentsList';
 
 const Agents = () => {
     const [users, setUsers] = useState([]);
@@ -12,14 +14,8 @@ const Agents = () => {
     const[brokers, setBrokers] = useState([]);
 
     const [showAgentEdit, setShowAgentEdit] = useState(false);
-
-
-    const [showAgentDelete, setShowAgentDelete] = useState(false);
-    const [agentToDelete, setAgentToDelete] = useState(null);
-
     const [selectedAgent, setSelectedAgent] = useState(null)
     
-
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [idNumber, setIdNumber] = useState(null);
@@ -45,14 +41,6 @@ const Agents = () => {
       setShowAgentEdit(false)
     }
 
-    const openSalesAgentDeleteModal = (agent) => {
-      setAgentToDelete(agent);
-      setShowAgentDelete(true)
-    }
-
-    const closeAgentDeleteModal =() => {
-      setShowAgentDelete(false)
-    }
     
   useEffect(() => {
     const getUsers = async(e) => {
@@ -82,12 +70,10 @@ const Agents = () => {
         const data = await response.json();
         setBrokerages(data)
         //console.log(data)
-
     };
     getBrokerages();
 }, []);
 
-  //console.log(users)
 
   const [usersCurrentPage, setUsersCurrentPage] = useState(1);
   const usersPerPage = 10;
@@ -170,59 +156,8 @@ const Agents = () => {
         </div>
       </div>
 
-      <div className="table-responsive small">
-        <table className="table table-sm">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Date Joined</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Broker</th>
-              <th scope="col" colSpan={3}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentUsers.map((agent) => (
-              <tr key={agent.id}>
-                <td>{agent.id}</td>
-                <td>{agent.date_created}</td>
-                <td>{agent.name}</td>
-                <td>{agent.email}</td>
-                <td>{agent.broker_name}-({agent.brokerage_name})</td>
-              
-                <td>
-                  <a href='#' className='btn btn-info btn-sm'>
-                  <i className="bi bi-eye"></i>
-                  </a>
-                </td>
-                <td>
-                  <a href='#' className='btn btn-primary btn-sm' onClick={() => openAgentEditModal(agent)}>
-                  <i className="bi bi-pencil-square"></i>
-                  </a>
-                </td>
-                <td>
-                  <a href='#' className='btn btn-danger btn-sm' onClick={() => openSalesAgentDeleteModal(agent)}>
-                  <i className="bi bi-trash"></i>
-                  </a>
-                </td>
-              </tr>
-            )
-            )}
-          </tbody>
-        </table>
-        <nav>
-  <ul className="pagination">
-          {[...Array(Math.ceil(users.length / usersPerPage)).keys()].map((number) => (
-            <li key={number + 1} className={`page-item ${number + 1 === usersCurrentPage ? 'active' : ''}`}>
-              <button className="page-link" onClick={() => handleUsersPageChange(number + 1)}>
-                {number + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      </div>
+      <AgentsList agents={users} currentAgents={currentUsers} usersPerPage={usersPerPage} usersCurrentPage={usersCurrentPage} handleUsersPageChange={handleUsersPageChange} openAgentEditModal={openAgentEditModal} />
+      
     </main>
 
 
@@ -341,7 +276,7 @@ const Agents = () => {
 </div>
 
 {showAgentEdit && <EditSalesAgent agent={selectedAgent} closeModal={closeAgentEditModal} />}
-{showAgentDelete && <DeleteAgent agent={agentToDelete} closeDeleteModal={closeAgentDeleteModal} />}
+
     </Wrapper>
   )
 }

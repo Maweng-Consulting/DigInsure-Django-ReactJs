@@ -42,14 +42,6 @@ const Brokers = () => {
       setShowBrokerEditModal(false);
     }
 
-    const openBrokerDeleteModal = (broker) => {
-      setShowBrokerDeleteModal(true);
-      setBrokerToDelete(broker);
-    }
-
-    const closeBrokerDeleteModal = () => {
-      setShowBrokerDeleteModal(false)
-    }
 
   useEffect(() => {
     const getUsers = async(e) => {
@@ -182,11 +174,7 @@ const Brokers = () => {
                   <i className="bi bi-pencil-square"></i>
                   </a>
                 </td>
-                <td>
-                  <a href='#' className='btn btn-danger btn-sm' onClick={() => openBrokerDeleteModal(broker)}>
-                  <i className="bi bi-trash"></i>
-                  </a>
-                </td>
+          
               </tr>
             )
             )}
@@ -308,7 +296,6 @@ const Brokers = () => {
 </div>
 
 {showBrokerEditModal && <EditBroker broker={selectedBroker} closeBrokerEditModal={closeBrokerEditModal} />}
-{showBrokerDeleteModal && <DeleteBroker broker={brokerToDelete} closeBrokerDeleteModal={closeBrokerDeleteModal} />}
   
     </Wrapper>
   )

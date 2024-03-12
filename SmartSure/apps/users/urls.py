@@ -5,10 +5,12 @@ from apps.users.views import (BrokerageDetailAPIView,
                               BrokerListAPIView, MembershipDetailAPIView,
                               MembershipListCreateAPIView, SalesAgentAPIView,
                               SalesAgentDetailAPIView, SalesAgentEditAPIView,
-                              UserListAPIView)
+                              UserDetailAPIView, UserListAPIView)
 
 urlpatterns = [
     path("", UserListAPIView.as_view(), name="users"),
+    path("<int:pk>/", UserDetailAPIView.as_view(), name="user-details"),
+
     path("memberships/", MembershipListCreateAPIView.as_view(), name="memberships"),
     path("memberships/<int:pk>/", MembershipDetailAPIView.as_view(), name="membership-details"),
     path("sales-agents/", SalesAgentAPIView.as_view(), name="sales-agents"),

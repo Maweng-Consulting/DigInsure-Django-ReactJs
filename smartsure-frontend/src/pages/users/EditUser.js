@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { BACKEND_URL } from '../../services/constants';
 
 const EditUser = ({ user, closeUserEditModal }) => {
     const [firstName, setFirstName] = useState(user.first_name);
@@ -15,6 +16,42 @@ const EditUser = ({ user, closeUserEditModal }) => {
     const [role, setRole] = useState(user.role)
     const [dateOfBirth, setDateOfBirth] = useState(user.date_of_birth);
 
+    const handleSubmit = async(e)=> {
+      e.preventDefault();
+      const userEditObject = {
+        first_name: firstName,
+        last_name: lastName,
+        username: username,
+        id_number: idNumber,
+        phone_number: phoneNumber,
+        gender: gender,
+        email: email,
+        postal_address: postalAddress,
+        physical_address: physicalAddress,
+        city: city,
+        country: country,
+        role: role,
+        date_of_birth: dateOfBirth
+      }
+
+      const response = await fetch(`${BACKEND_URL}/users/${user.id}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userEditObject)
+      })
+
+      if (response.ok) {
+        //alert("User has been updated successfully!!")
+        window.location.reload();
+      } else {
+        alert("Something went wrong!")
+      }
+
+      console.log(userEditObject)
+    }
+
   return (
     <div className="modal bg-success" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
     <div className="modal-dialog">
@@ -26,7 +63,7 @@ const EditUser = ({ user, closeUserEditModal }) => {
           </button>
         </div>
         <div className="modal-body">
-          <form>
+          <form onSubmit={handleSubmit}>
           <div className='row mb-3'>
           <div className="col">
             <label htmlFor="exampleInputEmail1" className="form-label">First Name</label>

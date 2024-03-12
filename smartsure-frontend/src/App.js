@@ -6,7 +6,7 @@ import Wrapper from './components/Wrapper';
 
 
 // Users
-import User from './pages/users/User';
+import Users from './pages/users/Users';
 import Agents from './pages/agents/Agents';
 import Brokers from './pages/brokers/Brokers';
 import Brokerages from './pages/brokers/Brokerages';
@@ -56,8 +56,7 @@ function App() {
       <Routes>
         <Route path='/' exact element={<Home />} />
 
-
-        <Route path='/users' element={<User />} />
+        <Route path='/users' element={<Users />} />
         <Route path='/users/agents' element={<Agents />} />
         <Route path='/users/brokers' element={<Brokers />} />
         <Route path='/users/brokerages' element={<Brokerages />} />
