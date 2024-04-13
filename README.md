@@ -16,4 +16,6 @@ This is a simple web based platform that will enable insurance services provider
   - Policies/Schemes/Scheme Groups Management.
   - Payments Management (Integrations and Collection).
   - Premiums Management.
-  - Reports Generation
+  - Reports Generation.
+  - Claims Processing.
+  - Sales/Leads Generation.
